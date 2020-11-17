@@ -36,7 +36,7 @@ void position::set_xyz_axis_mode(const std::string& xyz_axis_default_mode)
 		is_relative_null = false;
 	}
 
-	
+
 }
 
 void position::set_e_axis_mode(const std::string& e_axis_default_mode)
@@ -52,7 +52,7 @@ void position::set_e_axis_mode(const std::string& e_axis_default_mode)
 		is_extruder_relative_null = false;
 	}
 
-	
+
 }
 
 void position::set_units_default(const std::string&	units_default)
@@ -72,7 +72,7 @@ void position::set_units_default(const std::string&	units_default)
 bool position::can_take_snapshot()
 {
 	return (
-		!is_relative_null && 
+		!is_relative_null &&
 		!is_extruder_relative_null &&
 		has_definite_position &&
 		is_printer_primed &&
@@ -138,7 +138,7 @@ position::position()
 }
 
 position::position(int extruder_count)
-{ 
+{
 	is_empty = true;
 	feature_type_tag = 0;
 	f = 0;
@@ -192,7 +192,7 @@ position::position(int extruder_count)
 	current_tool = 0;
 	p_extruders = NULL;
 	set_num_extruders(extruder_count);
-	
+
 }
 
 position::position(const position &pos)
@@ -389,7 +389,7 @@ void position::reset_state()
 	has_position_changed = false;
 	has_received_home_command = false;
 	gcode_ignored = true;
-	
+
 	//is_in_bounds = true; // I dont' think we want to reset this every time since it's only calculated if the current position
 	// changes.
 	p_extruders[current_tool].e_relative = 0;
@@ -448,40 +448,40 @@ PyObject* position::to_py_tuple()
 		current_tool, // 21
 		num_extruders, // 22
 		// Bool (represented as an integer)
-		x_homed, // 23
-		y_homed, // 24
-		z_homed, // 25
-		is_relative, // 26
-		is_extruder_relative, // 27
-		is_metric, // 28
-		is_printer_primed, // 29
-		has_definite_position, // 30
-		is_layer_change, // 31
-		is_height_change, // 32
-		is_height_increment_change, // 33
-		is_xy_travel, // 34
-		is_xyz_travel, // 35
-		is_zhop, // 36
-		has_xy_position_changed, // 37
-		has_position_changed, // 38
-		has_received_home_command, // 39
-		is_in_position, // 40
-		in_path_position, // 41
-		is_in_bounds, // 42
+		(long int)(x_homed ? 1: 0), // 23
+		(long int)(y_homed ? 1: 0), // 24
+		(long int)(z_homed ? 1: 0), // 25
+		(long int)(is_relative ? 1: 0), // 26
+		(long int)(is_extruder_relative ? 1: 0), // 27
+		(long int)(is_metric ? 1: 0), // 28
+		(long int)(is_printer_primed ? 1: 0), // 29
+		(long int)(has_definite_position ? 1: 0), // 30
+		(long int)(is_layer_change ? 1: 0), // 31
+		(long int)(is_height_change ? 1: 0), // 32
+		(long int)(is_height_increment_change ? 1: 0), // 33
+		(long int)(is_xy_travel ? 1: 0), // 34
+		(long int)(is_xyz_travel ? 1: 0), // 35
+		(long int)(is_zhop ? 1: 0), // 36
+		(long int)(has_xy_position_changed ? 1: 0), // 37
+		(long int)(has_position_changed ? 1: 0), // 38
+		(long int)(has_received_home_command ? 1: 0), // 39
+		(long int)(is_in_position ? 1: 0), // 40
+		(long int)(in_path_position ? 1: 0), // 41
+		(long int)(is_in_bounds ? 1: 0), // 42
 		// Null bool, represented as integers
-		x_null, // 43
-		y_null, // 44
-		z_null, // 45
-		f_null, // 46
-		is_relative_null, // 47
-		is_extruder_relative_null, // 48
-		last_extrusion_height_null, // 49
-		is_metric_null, // 50
-		true, // 51 - Firmware retraction length null
-		true, // 52 - Firmware unretraction additional length null
-		true, // 53 - Firmware retraction feedrate null
-		true, // 54 - Firmware unretraction feedrate null
-		true, // 55 - Firmware ZLift Null
+		(long int)(x_null ? 1: 0), // 43
+		(long int)(y_null ? 1: 0), // 44
+		(long int)(z_null ? 1: 0), // 45
+		(long int)(f_null ? 1: 0), // 46
+		(long int)(is_relative_null ? 1: 0), // 47
+		(long int)(is_extruder_relative_null ? 1: 0), // 48
+		(long int)(last_extrusion_height_null ? 1: 0), // 49
+		(long int)(is_metric_null ? 1: 0), // 50
+		(long int)(true ? 1: 0), // 51 - Firmware retraction length null
+		(long int)(true ? 1: 0), // 52 - Firmware unretraction additional length null
+		(long int)(true ? 1: 0), // 53 - Firmware retraction feedrate null
+		(long int)(true ? 1: 0), // 54 - Firmware unretraction feedrate null
+		(long int)(true ? 1: 0), // 55 - Firmware ZLift Null
 		// file statistics
 		file_line_number, // 56
 		gcode_number, // 57
@@ -566,7 +566,7 @@ PyObject* position::to_py_dict()
 		"z_relative",
 		z_relative,
 		// Ints
-		"layer", 
+		"layer",
 		layer,
 		"height_increment",
 		height_increment,
@@ -578,71 +578,71 @@ PyObject* position::to_py_dict()
 		num_extruders,
 		// Bools
 		"x_null",
-		x_null,
+		(long int)(x_null ? 1: 0),
 		"y_null",
-		y_null,
+		(long int)(y_null ? 1: 0),
 		"z_null",
-		z_null,
+		(long int)(z_null ? 1: 0),
 		"f_null",
-		f_null,
+		(long int)(f_null ? 1: 0),
 		"x_homed",
-		x_homed,
+		(long int)(x_homed ? 1: 0),
 		"y_homed",
-		y_homed,
+		(long int)(y_homed ? 1: 0),
 		"z_homed",
-		z_homed,
+		(long int)(z_homed ? 1: 0),
 		"is_relative",
-		is_relative,
+		(long int)(is_relative ? 1: 0),
 		"is_relative_null",
-		is_relative_null,
+		(long int)(is_relative_null ? 1: 0),
 		"is_extruder_relative",
-		is_extruder_relative,
+		(long int)(is_extruder_relative ? 1: 0),
 		"is_extruder_relative_null",
-		is_extruder_relative_null,
+		(long int)(is_extruder_relative_null ? 1: 0),
 		"is_metric",
-		is_metric,
+		(long int)(is_metric ? 1: 0),
 		"is_metric_null",
-		is_metric_null,
+		(long int)(is_metric_null ? 1: 0),
 		"is_printer_primed",
-		is_printer_primed,
+		(long int)(is_printer_primed ? 1: 0),
 		"last_extrusion_height_null",
-		last_extrusion_height_null,
+		(long int)(last_extrusion_height_null ? 1: 0),
 		"firmware_retraction_length_null",
-		false,
+		(long int)(false ? 1: 0),
 		"firmware_unretraction_additional_length_null",
-		false,
+		(long int)(false ? 1: 0),
 		"firmware_retraction_feedrate_null",
-		false,
+		(long int)(false ? 1: 0),
 		"firmware_unretraction_feedrate_null",
-		false,
+		(long int)(false ? 1: 0),
 		"firmware_z_lift_null",
-		false,
+		(long int)(false ? 1: 0),
 		"has_position_error",
-		false,
+		(long int)(false ? 1: 0),
 		"has_definite_position",
-		has_definite_position,
+		(long int)(has_definite_position ? 1: 0),
 		"is_layer_change",
-		is_layer_change,
+		(long int)(is_layer_change ? 1: 0),
 		"is_height_change",
-		is_height_change,
+		(long int)(is_height_change ? 1: 0),
 		"is_height_increment_change",
-		is_height_increment_change,
+		(long int)(is_height_increment_change ? 1: 0),
 		"is_xy_travel",
-		is_xy_travel,
+		(long int)(is_xy_travel ? 1: 0),
 		"is_xyz_travel",
-		is_xyz_travel,
+		(long int)(is_xyz_travel ? 1: 0),
 		"is_zhop",
-		is_zhop,
+		(long int)(is_zhop ? 1: 0),
 		"has_xy_position_changed",
-		has_xy_position_changed,
+		(long int)(has_xy_position_changed ? 1: 0),
 		"has_position_changed",
-		has_position_changed,
+		(long int)(has_position_changed ? 1: 0),
 		"has_received_home_command",
-		has_received_home_command,
+		(long int)(has_received_home_command ? 1: 0),
 		"is_in_position",
-		is_in_position,
+		(long int)(is_in_position ? 1: 0),
 		"in_path_position",
-		in_path_position,
+		(long int)(in_path_position ? 1: 0),
 		"file_line_number",
 		file_line_number,
 		"file_position",
@@ -650,7 +650,7 @@ PyObject* position::to_py_dict()
 		"gcode_number",
 		gcode_number,
 		"is_in_bounds",
-		is_in_bounds
+		(long int)(is_in_bounds ? 1: 0)
 	);
 	if (p_position == NULL)
 	{
